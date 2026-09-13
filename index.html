@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>A Little Gift For You 💌</title>
+  
+  <!-- Favicon heart emoji -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+
+  <!-- Google Fonts: Elegant & Cute -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Canvas for Ambient Floating Hearts & Sparkles -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Confetti Canvas for Grand Finale -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Background Gradient Overlay for transitions -->
+  <div class="bg-gradient-overlay" id="bg-overlay"></div>
+
+  <!-- Music Controller Button (Fixed Top-Right) -->
+  <header class="top-nav">
+    <button id="music-toggle" class="music-btn" aria-label="Bật/Tắt nhạc" title="Bật/Tắt nhạc">
+      <span class="music-icon">🎵</span>
+      <span id="music-label" class="music-label">Music OFF</span>
+    </button>
+  </header>
+
+  <!-- Hidden Audio Element -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Main Multi-step Interactive Container -->
+  <main class="app-container">
+
+    <!-- SCREEN 1: INTRO -->
+    <section id="screen-intro" class="screen active">
+      <div class="card glass-card fade-in">
+        <div class="floating-badge">
+          <span class="badge-icon">💌</span>
+        </div>
+        <h1 class="title-primary">Một món quà nhỏ<br>dành cho em</h1>
+        <div class="text-group">
+          <p class="subtitle">Trước khi tiếp tục...</p>
+          <p class="highlight-text">Anh có một câu hỏi rất quan trọng.</p>
+        </div>
+        <button id="btn-start" class="btn btn-primary ripple-btn">
+          <span>💜 Bắt đầu</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: QUESTION & ANALYSIS -->
+    <section id="screen-question" class="screen">
+      <div class="card glass-card">
+        <div class="step-indicator">CÂU HỎI QUAN TRỌNG</div>
+        <h2 class="title-question">Ai là người đẹp nhất thế gian? ✨</h2>
+        
+        <!-- Answer Choices -->
+        <div id="answers-container" class="answers-stack">
+          <button class="btn btn-choice ripple-btn" data-choice="1">
+            <span>Người thứ nhất ❤️</span>
+          </button>
+          <button class="btn btn-choice ripple-btn" data-choice="2">
+            <span>Người thứ hai ❤️</span>
+          </button>
+          <button class="btn btn-choice ripple-btn" data-choice="3">
+            <span>Người thứ ba ❤️</span>
+          </button>
+        </div>
+
+        <!-- Analysis Simulation Box (Hidden by default) -->
+        <div id="analysis-box" class="analysis-box hidden">
+          <div class="spinner-heart">💖</div>
+          <div id="analysis-text" class="analysis-text">🔍 Đang phân tích...</div>
+          <div class="analysis-progress">
+            <div id="analysis-bar" class="analysis-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: CLASSIFIED DOSSIER -->
+    <section id="screen-dossier" class="screen">
+      <div class="card dossier-card glass-card">
+        <div class="stamp-badge">
+          <span>🔐 CLASSIFIED</span>
+        </div>
+        <h2 class="dossier-title">HỒ SƠ ĐẶC BIỆT</h2>
+        
+        <div class="dossier-info-list">
+          <div class="dossier-item">
+            <span class="dossier-label">Tình trạng:</span>
+            <span class="dossier-value highlight">Đã xác định ❤️</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-label">Mức độ quan trọng:</span>
+            <span class="dossier-value stars">⭐⭐⭐⭐⭐</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-label">Mức độ đáng yêu:</span>
+            <span class="dossier-value">Không thể đo lường</span>
+          </div>
+          <div class="dossier-item">
+            <span class="dossier-label">Mức độ đặc biệt:</span>
+            <span class="dossier-value">Tối đa ✨</span>
+          </div>
+        </div>
+
+        <button id="btn-unlock" class="btn btn-primary ripple-btn unlock-btn">
+          <span class="lock-icon">🔓</span>
+          <span>Mở hồ sơ</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: REVEAL -->
+    <section id="screen-reveal" class="screen">
+      <div class="card glass-card reveal-card">
+        <div class="reveal-intro">
+          <p id="reveal-line-1" class="reveal-fade-line">Sau một thời gian phân tích...</p>
+          <p id="reveal-line-2" class="reveal-fade-line">Hệ thống đã tìm được đáp án.</p>
+        </div>
+
+        <div id="reveal-hero" class="reveal-hero-block">
+          <div class="heart-pulse-glow">💖</div>
+          <h1 id="target-name-display" class="reveal-name">❤️ LÀ EM ❤️</h1>
+          <p class="reveal-sub">Không cần tìm thêm nữa.</p>
+        </div>
+
+        <button id="btn-goto-gallery" class="btn btn-primary ripple-btn reveal-btn">
+          <span>💌 Anh muốn nói điều này...</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: IMAGE GALLERY -->
+    <section id="screen-gallery" class="screen">
+      <div class="gallery-wrapper">
+        <div class="gallery-card glass-card">
+          <!-- Gallery Counter & Badge -->
+          <div class="gallery-header">
+            <span class="gallery-badge">MOMENTS 🌸</span>
+            <span id="gallery-counter" class="gallery-counter">1 / 5</span>
+          </div>
+
+          <!-- Main Image Frame with Swipe Support -->
+          <div class="gallery-frame" id="gallery-touch-area">
+            <div id="gallery-slider" class="gallery-slider">
+              <!-- Dynamically populated via JS -->
+            </div>
+            
+            <!-- Left/Right Nav Buttons -->
+            <button id="btn-prev" class="gallery-nav-btn prev-btn" aria-label="Ảnh trước">‹</button>
+            <button id="btn-next" class="gallery-nav-btn next-btn" aria-label="Ảnh kế tiếp">›</button>
+
+            <!-- Sparkle emission container -->
+            <div id="gallery-sparkles" class="gallery-sparkles"></div>
+          </div>
+
+          <!-- Dots Indicator -->
+          <div id="gallery-dots" class="gallery-dots"></div>
+
+          <!-- Dynamic Caption -->
+          <div class="gallery-caption-box">
+            <p id="gallery-caption" class="gallery-caption">"Một người rất đặc biệt."</p>
+          </div>
+
+          <!-- Bottom Action -->
+          <div class="gallery-footer">
+            <p class="gallery-teaser">Khoan... Vẫn còn một thứ nữa.</p>
+            <button id="btn-to-thoughts" class="btn btn-primary ripple-btn">
+              <span>❤️ Xem điều cuối cùng</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 6: MONOLOGUE / THOUGHTS -->
+    <section id="screen-thoughts" class="screen">
+      <div class="card glass-card thoughts-card">
+        <div class="night-stars">✨</div>
+        <div id="thought-lines-container" class="thought-lines">
+          <!-- Lines rendered sequentially by JS -->
+        </div>
+
+        <button id="btn-to-status" class="btn btn-primary ripple-btn thoughts-btn hidden">
+          <span>Tiếp tục 💫</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 7: CLASSIFIED STATUS -->
+    <section id="screen-status" class="screen">
+      <div class="card glass-card status-card">
+        <div class="status-tag">🔐 STATUS REPORT</div>
+        <p class="status-intro">Mối quan hệ này hiện đang ở chế độ:</p>
+        
+        <div class="status-banner">
+          <h2 id="status-title-display" class="status-title">BÍ MẬT KHÔNG ĐƯỢC CÔNG KHAI 🤫❤️</h2>
+        </div>
+
+        <div class="status-note">
+          <p id="status-subtext-display">Nhưng bí mật này...<br>anh lại khá thích.</p>
+        </div>
+
+        <button id="btn-to-final" class="btn btn-primary ripple-btn">
+          <span>Xem kết thúc ✨</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 8: FINALE -->
+    <section id="screen-final" class="screen">
+      <div class="card glass-card final-card">
+        <div class="crown-icon">👑</div>
+        <h1 class="final-title">❤️ THE END ❤️</h1>
+        <p class="final-gratitude">Cảm ơn em đã xem hết.</p>
+
+        <div class="ps-card">
+          <div class="ps-tag">P/S:</div>
+          <p id="final-ps-display" class="ps-content">Nếu em đã xem đến đây...<br>thì coi như anh thắng rồi. 😌</p>
+        </div>
+
+        <div class="final-actions">
+          <button id="btn-replay" class="btn btn-outline ripple-btn">
+            <span>🔄 Xem lại từ đầu</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
